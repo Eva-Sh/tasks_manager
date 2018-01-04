@@ -1,12 +1,18 @@
 import React from 'react';
-import LoginPage from './components/LoginPage';
-import AboutPage from './components/AboutPage';
+import { Link } from 'react-router';
 
-function App() {
-    return (
-        <LoginPage />
-    )
-}
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
-export default App
 
+const App = React.createClass({
+    render() {
+        return (
+            <div className='App'>
+                {this.props.children}
+            </div>
+        );
+    },
+});
+
+export default App;
