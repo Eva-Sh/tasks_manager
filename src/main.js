@@ -8,6 +8,10 @@ import App from './app';
 import LoginPage from './components/LoginPage/LoginPage';
 import AboutPage from './components/AboutPage';
 
+window.handleGoogleApiLoaded = () => {
+    api.authorize({ immediate: false });
+}
+
 render(
     <Router history={ hashHistory }>
         <Route path='/' component={App}>
