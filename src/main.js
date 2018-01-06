@@ -21,11 +21,21 @@ function renderApp() {
         <Router history={ hashHistory }>
             <Route path='/' component={App}>
                 <Route path='/login' component={LoginPage} />
-                <Route component={LoggedInLayout}>
+                <Route component={LoggedInLayout} onEnter={requireAuth}>
                     <Route path='/about' component={AboutPage} />
                 </Route>
             </Route>
         </Router>,
         document.getElementById('app')
     );
+}
+
+function requireAuth(nextState, replace) {
+    SessionStore
+    if(!SessionStore.isLoggedIn) {
+        replace({
+            pathname: '/login',
+            state: { nextPathname: nextState.location.pathname }
+        });
+    }
 }
