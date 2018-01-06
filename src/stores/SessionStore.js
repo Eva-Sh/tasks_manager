@@ -25,21 +25,21 @@ const SessionStore = Object.assign({}, EventEmitter.prototype, {
     }
 });
 
-AppDispatcher.register(action => {//регистриуем обработчик действий
+AppDispatcher.register(action => {
     console.info(action.type, action);
 
     switch(action.type) {
-        case AppConstants.SESSION_AUTHORIZE_SUCS: {//успех
+        case AppConstants.SESSION_AUTHORIZE_SUCS: {
             _isLoggedIn = true;
 
-            SessionStore.emitChange();//для передачи всем слушателям
+            SessionStore.emitChange();
             break;
         }
 
-        case AppConstants.SESSION_AUTHORIZE_FAIL: {//ошибка
+        case AppConstants.SESSION_AUTHORIZE_FAIL: {
             _isLoggedIn = false;
 
-            SessionStore.emitChange();//для передачи всем слушателям
+            SessionStore.emitChange();
             break;
         }
 

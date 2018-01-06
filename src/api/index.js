@@ -16,7 +16,7 @@ export default {
                         return reject(authResult.error);
                     }
 
-                    return gapi.client.load('task', 'v1', () => gapi.client.load('plus', 'v1',() => resulve() ) );
+                    return gapi.client.load('tasks', 'v1', () => gapi.client.load('plus', 'v1', () => resolve() ) );
                 }
             );
         });
