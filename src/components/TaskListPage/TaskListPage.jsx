@@ -10,6 +10,13 @@ import FolderIcon from 'material-ui/lib/svg-icons/file/folder';
 import AddIcon from 'material-ui/lib/svg-icons/content/add';
 
 import './TasklistsPage.less';
+import TaskListsStore from "../../stores/TaskListStore";
+
+function getStateFromFlux() {
+    return {
+        taskLists: TaskListsStore.getTaskLists()
+    };
+}
 
 const TaskListsPage = React.createClass({
     contextTypes: {
@@ -42,11 +49,16 @@ const TaskListsPage = React.createClass({
                         </List>
                         <Divider />
                         <List className='task-lists-page__list'>
-                            <ListItem
-                                leftIcon={<ExitIcon />}
-                                primaryText="Log out"
-                                onClick={this.handleLogOut}
-                            />
+                            {
+                                this.state.taskLists.map(list =>
+                                    <ListItem
+                                        key={list.id}
+                                        leftIcon={<FolderIcon />}
+                                        primaryText={list.name}
+                                        onClick={router.push.bind(null, `/lists/${list.id}`)}
+                                    />
+                                )
+                            }
                         </List>
                     </List>
                 </div>

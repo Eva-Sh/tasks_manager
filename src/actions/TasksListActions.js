@@ -1,0 +1,26 @@
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import AppConstants from '../constants/AppConstants';
+
+import api from '../api';
+
+//набор методов для создания экшенов
+
+const TaskListsActions = {
+    loadTaskLists() {
+        api.listTaskLists()
+            .then(data => {
+                AppDispatcher.dispatch({
+                    type: AppConstants.TASK_LISTS_LOAD_SUCCESS,
+                    items: data.items
+                });
+            })
+            .catch(err => {
+                AppDispatcher.dispatch({
+                    type: AppConstants.TASK_LISTS_LOAD_FAIL,
+                    error: err
+                });
+            });
+    }
+};
+
+export default TaskListsActions;
