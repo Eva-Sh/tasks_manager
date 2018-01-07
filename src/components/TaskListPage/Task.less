@@ -2,20 +2,21 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
+  width: 93%;
   margin: 0 16px;
   padding: 8px 0;
   border-bottom: 1px solid  rgba(0,0,0,0.12);
-
-  &.editing {
-    display: flex;
-    flex-direction: column;
-  }
+}
+.task.editing {
+  display: flex;
+  flex-direction: column;
 }
 
 .task__text {
   width: 100%;
   min-height: 20px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
 }
 
 .task__due {
