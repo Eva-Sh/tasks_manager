@@ -27,5 +27,49 @@ export default {
         return new Promise((resolve, reject) => {
             request.execute(resp => resolve(resp));
         });
+    },
+
+    insertTaskList({ title }) {
+        const request = gapi.client.tasks.tasklists.insert({
+            title: title
+        });
+
+        return new Promise((resolve, reject) => {
+            request.execute(resp => resolve(resp));
+        });
+    },
+
+    listTasks(taskListId) {
+        const request = gapi.client.tasks.tasks.list({
+            tasklist: taskListId
+        });
+
+        return new Promise((resolve, reject) => {
+            request.execute(resp => resolve(resp));
+        });
+    },
+
+    insertTask({ taskListId, title }) {
+        const request = gapi.client.tasks.tasks.insert({
+            tasklist : taskListId,
+            title    : title
+        });
+
+        return new Promise((resolve, reject) => {
+            request.execute(resp => resolve(resp));
+        });
+    },
+
+    updateTask({ taskListId, taskId, ...params }) {
+        const request = gapi.client.tasks.tasks.update({
+            tasklist : taskListId,
+            task     : taskId,
+            id       : taskId,
+            ...params
+        });
+
+        return new Promise((resolve, reject) => {
+            request.execute(resp => resolve(resp));
+        });
     }
 }

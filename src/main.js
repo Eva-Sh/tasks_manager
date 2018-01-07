@@ -8,7 +8,7 @@ import App from './App.jsx';
 import LoginPage from './components/LoginPage/LoginPage.jsx';
 import AboutPage from './components/AboutPage/AboutPage.jsx';
 import LoggedInLayout from './components/LoggedInLayout/LoggedInLayout.jsx';
-import TaskListPage from './components/TaskListPage/TaskListPage.jsx';
+import TaskListPage from './components/TaskListPage/TasklistPage.jsx';
 import TasksPage from './components/TaskListPage/TasksPage.jsx';
 
 import SessionActions from './actions/SessionActions';

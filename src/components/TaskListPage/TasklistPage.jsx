@@ -1,5 +1,8 @@
 import React from 'react';
 
+import TaskListsStore from '../../stores/TaskListStore';
+import TaskListsActions from '../../actions/TaskListActions';
+
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
@@ -9,8 +12,9 @@ import ExitIcon from 'material-ui/lib/svg-icons/action/exit-to-app';
 import FolderIcon from 'material-ui/lib/svg-icons/file/folder';
 import AddIcon from 'material-ui/lib/svg-icons/content/add';
 
+import TaskListCreateModal from './TaskCreateModal.jsx';
+
 import './TasklistsPage.less';
-import TaskListsStore from "../../stores/TaskListStore";
 
 function getStateFromFlux() {
     return {
@@ -18,9 +22,42 @@ function getStateFromFlux() {
     };
 }
 
-const TaskListsPage = React.createClass({
+const TasklistsPage = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired
+    },
+
+    getInitialState() {
+        return {
+            ...getStateFromFlux(),
+            isCreatingTaskList: false
+        };
+    },
+
+    componentWillMount() {
+        TaskListsActions.loadTaskLists();
+    },
+
+    componentDidMount() {
+        TaskListsStore.addChangeListener(this._onChange);
+    },
+
+    componentWillUnmount() {
+        TaskListsStore.removeChangeListener(this._onChange);
+    },
+
+    handleAddTaskList() {
+        this.setState({ isCreatingTaskList : true });
+    },
+
+    handleClose() {
+        this.setState({ isCreatingTaskList : false });
+    },
+
+    handleTaskListSubmit(taskList) {
+        TaskListsActions.createTaskList(taskList);
+
+        this.setState({ isCreatingTaskList : false });
     },
 
     render() {
@@ -46,9 +83,6 @@ const TaskListsPage = React.createClass({
                         </List>
                         <Divider />
                         <List className='task-lists-page__list' subheader="Task Lists">
-                        </List>
-                        <Divider />
-                        <List className='task-lists-page__list'>
                             {
                                 this.state.taskLists.map(list =>
                                     <ListItem
@@ -59,12 +93,30 @@ const TaskListsPage = React.createClass({
                                     />
                                 )
                             }
+                            <ListItem
+                                leftIcon={<AddIcon />}
+                                primaryText="Create new list"
+                                onClick={this.handleAddTaskList}
+                            />
+                        </List>
+                        <Divider />
+                        <List className='task-lists-page__list'>
+                            <ListItem
+                                leftIcon={<ExitIcon />}
+                                primaryText="Log out"
+                                onClick={this.handleLogOut}
+                            />
                         </List>
                     </List>
                 </div>
                 <div className='task-lists-page__tasks'>
                     {this.props.children}
                 </div>
+                <TaskListCreateModal
+                    isOpen={this.state.isCreatingTaskList}
+                    onSubmit={this.handleTaskListSubmit}
+                    onClose={this.handleClose}
+                />
             </div>
         );
     },
@@ -74,4 +126,4 @@ const TaskListsPage = React.createClass({
     }
 });
 
-export default TaskListsPage;
+export default TasklistsPage;

@@ -1,0 +1,53 @@
+.task {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin: 0 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid  rgba(0,0,0,0.12);
+
+  &.editing {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.task__text {
+  width: 100%;
+  min-height: 20px;
+}
+
+.task__due {
+  width: 100%;
+  color: rgba(0,0,0,0.54);
+  font-size: 13px;
+}
+
+.task__toolbar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+
+  > * {
+    margin-right: 6px;
+  }
+}
+
+.task__input {
+  font-size: 16px;
+  margin: 8px 16px;
+  padding: 6px;
+  width: 100%;
+  border: 1px solid rgba(0,0,0,0.12);
+
+  &:focus {
+    outline: 0;
+    border: 1px solid #00BCD4;
+  }
+}
+
+.task__checkbox {
+  max-width: 40px;
+}
