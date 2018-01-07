@@ -7,7 +7,9 @@ import './styles/main.less';
 import App from './App.jsx';
 import LoginPage from './components/LoginPage/LoginPage.jsx';
 import AboutPage from './components/AboutPage/AboutPage.jsx';
-import LoggedInLayout from './components/LoggedInLayout/LoggedInLayout.jsx'
+import LoggedInLayout from './components/LoggedInLayout/LoggedInLayout.jsx';
+import TaskListPage from './components/TaskListPage/TaskListPage.jsx';
+import TasksPage from './components/TaskListPage/TasksPage.jsx';
 
 import SessionActions from './actions/SessionActions';
 import SessionStore from './stores/SessionStore';
@@ -23,6 +25,9 @@ function renderApp() {
                 <Route path='/login' component={LoginPage} />
                 <Route component={LoggedInLayout} onEnter={requireAuth}>
                     <Route path='/about' component={AboutPage} />
+                    <Route path='/lists' component={TaskListPage}>
+                        <Route path='/lists/:id' component={TasksPage} />
+                    </Route>
                 </Route>
             </Route>
         </Router>,
