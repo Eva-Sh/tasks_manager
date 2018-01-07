@@ -1,8 +1,5 @@
 import React from 'react';
 
-import TaskListsStore from '../../stores/TaskListStore';
-import TaskListsActions from '../../actions/TaskListActions';
-
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
@@ -12,52 +9,11 @@ import ExitIcon from 'material-ui/lib/svg-icons/action/exit-to-app';
 import FolderIcon from 'material-ui/lib/svg-icons/file/folder';
 import AddIcon from 'material-ui/lib/svg-icons/content/add';
 
-import TaskListCreateModal from './TaskCreateModal.jsx';
-
 import './TasklistsPage.less';
-
-function getStateFromFlux() {
-    return {
-        taskLists: TaskListsStore.getTaskLists()
-    };
-}
 
 const TasklistsPage = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired
-    },
-
-    getInitialState() {
-        return {
-            ...getStateFromFlux(),
-            isCreatingTaskList: false
-        };
-    },
-
-    componentWillMount() {
-        TaskListsActions.loadTaskLists();
-    },
-
-    componentDidMount() {
-        TaskListsStore.addChangeListener(this._onChange);
-    },
-
-    componentWillUnmount() {
-        TaskListsStore.removeChangeListener(this._onChange);
-    },
-
-    handleAddTaskList() {
-        this.setState({ isCreatingTaskList : true });
-    },
-
-    handleClose() {
-        this.setState({ isCreatingTaskList : false });
-    },
-
-    handleTaskListSubmit(taskList) {
-        TaskListsActions.createTaskList(taskList);
-
-        this.setState({ isCreatingTaskList : false });
     },
 
     render() {
@@ -67,7 +23,9 @@ const TasklistsPage = React.createClass({
             <div className='task-lists-page'>
                 <div className='task-lists-page__menu'>
                     <List className='task-lists-page__list'>
-                        <h3 className='task-lists-page__title'>Task manager</h3>
+                        <h3 className='task-lists-page__title'>
+                            Almost Google Tasks
+                        </h3>
                         <Divider />
                         <List className='task-lists-page__list'>
                             <ListItem
@@ -84,10 +42,17 @@ const TasklistsPage = React.createClass({
                         <Divider />
                         <List className='task-lists-page__list' subheader="Task Lists">
                             {
-                                this.state.taskLists.map(list =>
+                                this.props.taskLists.map(list =>
                                     <ListItem
                                         key={list.id}
                                         leftIcon={<FolderIcon />}
+                                        style={
+                                            this.props.selectedListId === list.id
+                                                ?
+                                                { backgroundColor: 'rgba(0,0,0,0.1)' }
+                                                :
+                                                null
+                                        }
                                         primaryText={list.name}
                                         onClick={router.push.bind(null, `/lists/${list.id}`)}
                                     />
@@ -96,7 +61,7 @@ const TasklistsPage = React.createClass({
                             <ListItem
                                 leftIcon={<AddIcon />}
                                 primaryText="Create new list"
-                                onClick={this.handleAddTaskList}
+                                onClick={this.props.onAddTaskList}
                             />
                         </List>
                         <Divider />
@@ -104,25 +69,16 @@ const TasklistsPage = React.createClass({
                             <ListItem
                                 leftIcon={<ExitIcon />}
                                 primaryText="Log out"
-                                onClick={this.handleLogOut}
+                                onClick={this.props.onLogOut}
                             />
                         </List>
                     </List>
                 </div>
                 <div className='task-lists-page__tasks'>
-                    {this.props.children}
+                    {this.props.page}
                 </div>
-                <TaskListCreateModal
-                    isOpen={this.state.isCreatingTaskList}
-                    onSubmit={this.handleTaskListSubmit}
-                    onClose={this.handleClose}
-                />
             </div>
         );
-    },
-
-    _onChange() {
-        this.setState(getStateFromFlux());
     }
 });
 
