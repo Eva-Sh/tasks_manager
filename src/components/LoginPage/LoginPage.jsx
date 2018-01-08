@@ -2,8 +2,7 @@ import React from 'react';
 
 import RaisedButton from 'material-ui/lib/raised-button';
 
-import './StyleLoginPage.less';
-
+import './style.less';
 
 const LoginPage = React.createClass({
     render() {
@@ -11,11 +10,11 @@ const LoginPage = React.createClass({
             <div className='login-page'>
                 <div className='login-page__container'>
                     <div className='login-page__text'>
-                        <h1 className='login-page__title'>Task Manager</h1>
-                        <p className='login-page__description'>Your organizer</p>
+                        <h1 className='login-page__title'>Менеджер задач</h1>
+                        <p className='login-page__description'>Ваш ежедневник</p>
                         <RaisedButton
                             className='login-page__button'
-                            label='Log in with Google'
+                            label='Войти'
                             onClick={this.props.onLogIn}
                         />
                     </div>
@@ -26,10 +25,6 @@ const LoginPage = React.createClass({
                 </div>
             </div>
         );
-    },
-
-    _onChange() {
-        this.setState(getStateFromFlux());
     }
 });
 

@@ -1,20 +1,23 @@
 import React from 'react';
 
 import Dialog from 'material-ui/lib/dialog';
+import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import FlatButton from 'material-ui/lib/flat-button';
 import TextField from 'material-ui/lib/text-field';
 
 const TaskCreateModal = React.createClass({
     getInitialState() {
         return {
-            text : ''
+            text : '',
+            note : '',
+            due  : null
         };
     },
 
     handleClose() {
         const { onClose } = this.props;
 
-        this.setState({ text: '' });
+        this.resetState();
 
         if (onClose) {
             onClose();
@@ -26,11 +29,13 @@ const TaskCreateModal = React.createClass({
 
         if (onSubmit) {
             onSubmit({
-                text: this.state.text
+                text: this.state.text,
+                note: this.state.note,
+                due: this.state.due
             });
         }
 
-        this.setState({ text: '' });
+        this.resetState();
     },
 
     handleTextChange(e) {
@@ -39,8 +44,28 @@ const TaskCreateModal = React.createClass({
         });
     },
 
+    handleNoteChange(e) {
+        this.setState({
+            note: e.target.value
+        });
+    },
+
+    handleDueChange(e, date) {
+        this.setState({
+            due: date
+        });
+    },
+
+    resetState() {
+        this.setState({
+            text: '',
+            note: '',
+            due: null
+        });
+    },
+
     render() {
-        const { text } = this.state;
+        const { text, note, due } = this.state;
         const { isOpen } = this.props;
 
         return (
@@ -49,12 +74,12 @@ const TaskCreateModal = React.createClass({
                 contentStyle={{ maxWidth: 400 }}
                 actions={[
                     <FlatButton
-                        label='Cancel'
+                        label='Отмена'
                         onTouchTap={this.handleClose}
                     />,
                     <FlatButton
                         primary
-                        label='Submit'
+                        label='Отправить'
                         disabled={!text}
                         onTouchTap={this.handleSubmit}
                     />
@@ -62,14 +87,28 @@ const TaskCreateModal = React.createClass({
                 open={isOpen}
                 onRequestClose={this.handleClose}
             >
-                <h3 className='task-create-modal__modal-title'>Add task</h3>
+                <h3 className='task-create-modal__modal-title'>Добавить задачу</h3>
                 <TextField
                     fullWidth
                     ref={c => this.taskInput = c}
                     value={text}
                     onChange={this.handleTextChange}
-                    hintText='e.g. buy a bottle of milk'
-                    floatingLabelText='Enter task description'
+                    hintText='к примеру, полить цветы'
+                    floatingLabelText='Введитe название задачи'
+                />
+                <TextField
+                    fullWidth
+                    value={note}
+                    onChange={this.handleNoteChange}
+                    hintText='к примеру, мелколистный фикус '
+                    floatingLabelText='Введите текст задания'
+                />
+                <DatePicker
+                    autoOk
+                    fullWidth
+                    value={due}
+                    onChange={this.handleDueChange}
+                    floatingLabelText='Выберете срок исполнения'
                 />
             </Dialog>
         );

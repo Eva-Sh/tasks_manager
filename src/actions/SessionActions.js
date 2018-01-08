@@ -6,7 +6,7 @@ import api from '../api';
 const SessionActions = {
     authorize(immediate = false, callback) {
         api.authorize({ immediate })
-            .then(() => {//при успехе, вызываем экшн типа SESSION_AUTHORIZE_SUCCESS
+            .then(() => {
                 AppDispatcher.dispatch({
                     type: AppConstants.SESSION_AUTHORIZE_SUCCESS
                 });
@@ -16,7 +16,7 @@ const SessionActions = {
             .catch((err) => {
                 AppDispatcher.dispatch({
                     type: AppConstants.SESSION_AUTHORIZE_FAIL,
-                    error: err//объект с ошибкой
+                    error: err
                 });
 
                 if (callback) callback();

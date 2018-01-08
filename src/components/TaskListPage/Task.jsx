@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 import Checkbox from 'material-ui/lib/checkbox';
 import ListItem from 'material-ui/lib/lists/list-item';
@@ -8,7 +9,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 
-import DeleteIcon from 'material-ui/lib/svg-icons/action/delete';
+import NoteIcon from 'material-ui/lib/svg-icons/communication/message';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 
 import './Task.less';
@@ -52,11 +53,14 @@ const Task = React.createClass({
     },
 
     focusInput() {
-        this.input.focus();
+        this.text.focus();
     },
 
     saveTask() {
-        this.props.onUpdate({ text: this.input.value });
+        this.props.onUpdate({
+            text: this.text.value,
+            note: this.note.value
+        });
 
         this.setState({ isEditing: false });
     },
@@ -66,21 +70,32 @@ const Task = React.createClass({
     },
 
     render() {
+        const { text, note, due, isCompleted, onDelete } = this.props;
+
         return (
             this.state.isEditing
                 ?
                 <div className='task editing'>
                     <input
-                        className='task__input'
+                        className='task__text-input'
                         type='text'
-                        defaultValue={this.props.text}
+                        defaultValue={text}
                         onKeyDown={this.handleKeyDown}
-                        ref={c => this.input = c}
+                        ref={c => this.text = c}
                     />
+
+                    <textarea
+                        className='task__note-input'
+                        type='text'
+                        defaultValue={note}
+                        onKeyDown={this.handleKeyDown}
+                        ref={c => this.note = c}
+                    />
+
                     <div className='task__toolbar'>
                         <div>
-                            <RaisedButton primary onClick={this.handleSave} label='Save' />
-                            <FlatButton onClick={this.handleCancel} label='Cancel' />
+                            <RaisedButton primary onClick={this.handleSave} label='Сохранить' />
+                            <FlatButton onClick={this.handleCancel} label='Отменить' />
                         </div>
                     </div>
                 </div>
@@ -88,17 +103,38 @@ const Task = React.createClass({
                 <div className='task'>
                     <Checkbox
                         className='task__checkbox'
-                        checked={this.props.isCompleted}
+                        checked={isCompleted}
                         onCheck={this.handleCheck}
+                        labelStyle={{color: 'white'}}
                     />
 
                     <div className='task__text' onClick={this.handleEdit}>
-                        <div className='task__title'>{this.props.text}</div>
+                        <div className='task__title'>
+                            {text}
+                            {
+                                note
+                                    ?
+                                    <span title={note}>
+                                        <NoteIcon className='task__note' />
+                                    </span>
+                                    :
+                                    null
+                            }
+                        </div>
+                        {
+                            due
+                                ?
+                                <div className='task__due'>
+                                    {'due ' + moment(due).fromNow()}
+                                </div>
+                                :
+                                null
+                        }
                     </div>
 
                     <IconMenu iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}>
-                        <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
-                        <MenuItem>Delete</MenuItem>
+                        <MenuItem onClick={this.handleEdit}>Редактировать</MenuItem>
+                        <MenuItem onClick={onDelete}>Удалить</MenuItem>
                     </IconMenu>
                 </div>
         );

@@ -49,12 +49,12 @@ const TaskListCreateModal = React.createClass({
                 contentStyle={{ maxWidth: 400 }}
                 actions={[
                     <FlatButton
-                        label='Cancel'
+                        label='Отмена'
                         onTouchTap={this.handleClose}
                     />,
                     <FlatButton
                         primary
-                        label='Submit'
+                        label='Отправить'
                         disabled={!name}
                         onTouchTap={this.handleSubmit}
                     />
@@ -62,14 +62,14 @@ const TaskListCreateModal = React.createClass({
                 open={isOpen}
                 onRequestClose={this.handleClose}
             >
-                <h3 className='task-list-create-modal__modal-title'>Add task list</h3>
+                <h3 className='task-list-create-modal__modal-title'>Добавить список задач</h3>
                 <TextField
                     fullWidth
                     ref={c => this.taskInput = c}
                     value={name}
                     onChange={this.handleTextChange}
-                    hintText='e.g. movies to watch'
-                    floatingLabelText='Enter task list name'
+                    hintText='к примеру, просмотр кино'
+                    floatingLabelText='Введите название списка задач'
                 />
             </Dialog>
         );

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import TaskListsStore from '../stores/TaskListsStore';
-import TaskListsActions from '../actions/TaskListsActions';
+import TaskListsStore from '../stores/TaskListStore';
+import TaskListsActions from '../actions/TaskListActions';
 
 import TaskListCreateModal from '../components/TaskListPage/TaskListCreateModal.jsx';
-import TasklistsPage from '../components/TaskListPage/TasklistPage';
+import TasklistsPage from '../components/TaskListPage/TasklistPage.jsx';
 
 function getStateFromFlux() {
     return {

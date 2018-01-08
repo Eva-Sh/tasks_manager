@@ -3,7 +3,7 @@ import React from 'react';
 import SessionStore from '../stores/SessionStore';
 import SessionActions from '../actions/SessionActions';
 
-import LoginPage from '../components/LoginPage/LoginPage';
+import LoginPage from '../components/LoginPage/LoginPage.jsx';
 
 function getStateFromFlux() {
     return {
@@ -40,6 +40,7 @@ const LoginPageContainer = React.createClass({
 
     handleLogIn() {
         SessionActions.authorize();
+        console.log(4444);
     },
 
     redirectLoggedInUser() {

@@ -8,6 +8,7 @@ import HomeIcon from 'material-ui/lib/svg-icons/action/home';
 import ExitIcon from 'material-ui/lib/svg-icons/action/exit-to-app';
 import FolderIcon from 'material-ui/lib/svg-icons/file/folder';
 import AddIcon from 'material-ui/lib/svg-icons/content/add';
+import Colors from 'material-ui/lib/styles/colors';
 
 import './TasklistsPage.less';
 
@@ -24,23 +25,23 @@ const TasklistsPage = React.createClass({
                 <div className='task-lists-page__menu'>
                     <List className='task-lists-page__list'>
                         <h3 className='task-lists-page__title'>
-                            Almost Google Tasks
+                           Менеджер задач
                         </h3>
                         <Divider />
                         <List className='task-lists-page__list'>
                             <ListItem
                                 leftIcon={<HomeIcon />}
-                                primaryText="Home"
+                                primaryText="Список задач"
                                 onClick={router.push.bind(null, `/lists`)}
                             />
                             <ListItem
                                 leftIcon={<ListIcon />}
-                                primaryText="About"
+                                primaryText="Страница о менеджере"
                                 onClick={router.push.bind(null, `/about`)}
                             />
                         </List>
                         <Divider />
-                        <List className='task-lists-page__list' subheader="Task Lists">
+                        <List className='task-lists-page__list' subheader="Разделы">
                             {
                                 this.props.taskLists.map(list =>
                                     <ListItem
@@ -60,7 +61,7 @@ const TasklistsPage = React.createClass({
                             }
                             <ListItem
                                 leftIcon={<AddIcon />}
-                                primaryText="Create new list"
+                                primaryText="Новый раздел задач"
                                 onClick={this.props.onAddTaskList}
                             />
                         </List>
@@ -68,7 +69,7 @@ const TasklistsPage = React.createClass({
                         <List className='task-lists-page__list'>
                             <ListItem
                                 leftIcon={<ExitIcon />}
-                                primaryText="Log out"
+                                primaryText="Выйти"
                                 onClick={this.props.onLogOut}
                             />
                         </List>

@@ -1,12 +1,12 @@
 import React from 'react';
 
 import TasksActions from '../actions/TasksActions';
-import TaskListsActions from '../actions/TaskListsActions';
+import TaskListsActions from '../actions/TaskListActions';
 import TasksStore from '../stores/TasksStore';
-import TaskListsStore from '../stores/TaskListsStore';
+import TaskListsStore from '../stores/TaskListStore';
 
-import TasksPage from '../components/TaskListPage/TasksPage';
-import TaskCreateModal from '../components/TaskListPage/TaskCreateModal';
+import TasksPage from '../components/TaskListPage/TasksPage.jsx';
+import TaskCreateModal from '../components/TaskListPage/TaskCreateModal.jsx';
 
 function getStateFromFlux() {
     return {
@@ -92,7 +92,7 @@ const TasksPageContainer = React.createClass({
 
     handleDeleteTaskList() {
         const isConfirmed = confirm(
-            'Are you sure you want delete this task list? All tasks in it will be deleted too'
+            'При удалении списка все задачи в нем будут также удалены'
         );
 
         if (isConfirmed) {

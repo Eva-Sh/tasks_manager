@@ -8,7 +8,7 @@ injectTapEventPlugin();
 const App = React.createClass({
     render() {
         return (
-            <div className='App'>
+            <div className='app'>
                 {this.props.children}
             </div>
         );
