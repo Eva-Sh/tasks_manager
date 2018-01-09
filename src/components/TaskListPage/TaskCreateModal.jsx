@@ -101,7 +101,7 @@ const TaskCreateModal = React.createClass({
                     value={note}
                     onChange={this.handleNoteChange}
                     hintText='к примеру, мелколистный фикус '
-                    floatingLabelText='Введите текст задания'
+                    floatingLabelText='Введите текст задачи'
                 />
                 <DatePicker
                     autoOk
